@@ -1,4 +1,7 @@
 // NeuralNetwork.cpp  from https://www.geeksforgeeks.org/ml-neural-network-implementation-in-c-from-scratch/
+// Enhanced with work and verify methods
+#include <memory>
+#include <cmath>
 #include "NeuralNetwork.hpp"
 
 // support procs
@@ -117,12 +120,66 @@ void NeuralNetwork::propagateBackward(RowVector& output)
 
 void NeuralNetwork::train(std::vector<RowVector*> input_data, std::vector<RowVector*> output_data)
 {
+	int correct = 0;
 	for (uint i = 0; i < input_data.size(); i++) {
 		std::cout << "Input to neural network is : " << *input_data[i] << std::endl;
 		propagateForward(*input_data[i]);
 		std::cout << "Expected output is : " << *output_data[i] << std::endl;
 		std::cout << "Output produced is : " << *neuronLayers.back() << std::endl;
+		auto expected2 = *output_data[i];
+		auto expected = expected2.coeff(1,-1);
+		auto produced2 = *neuronLayers.back();
+		auto produced = produced2.coeff(1,-1);
+		std::cout << "Expected output is : " << expected << std::endl;
+		std::cout << "Output produced is : " << produced << std::endl;
+		if ( round(produced) == expected ) {
+			correct++;
+			std::cout << "  correct" << std::endl;
+		} else {
+			std::cout << "  incorrect" << std::endl;
+		}
 		propagateBackward(*output_data[i]);
 		std::cout << "MSE : " << std::sqrt((*deltas.back()).dot((*deltas.back())) / deltas.back()->size()) << std::endl;
+	}
+	if (input_data.size() > 0)
+	{
+		std::cout << "Score: " << correct*100/input_data.size() << "%  " << "(" << correct << " of " << input_data.size() << ")" << std::endl;
+	}
+}
+
+std::vector<RowVector> NeuralNetwork::work(std::vector<RowVector*> input_data)
+{
+	std::vector<RowVector> output_data;
+	for (uint i = 0; i < input_data.size(); i++) {
+		std::cout << "Input to neural network is : " << *input_data[i] << std::endl;
+		propagateForward(*input_data[i]);
+		std::cout << "Output produced is : " << *neuronLayers.back() << std::endl;
+		auto out = *neuronLayers.back();
+		output_data.push_back(out);
+	}
+	return output_data;
+}
+
+void NeuralNetwork::verify(std::vector <std::shared_ptr<TrainingData>> vData, std::vector<RowVector*> input_data)
+{
+	int correct = 0;
+	for (uint i = 0; i < input_data.size(); i++) {
+		std::cout << "Input to neural network is : " << *input_data[i] << std::endl;
+		propagateForward(*input_data[i]);
+		int expected = vData[i]->id;
+		auto produced = *neuronLayers.back();
+		auto produced2 = produced.coeff(1,-1);
+		std::cout << "Expected output is : " << expected << std::endl;
+		std::cout << "Output produced is : " << produced2 << std::endl;
+		if ( round(produced2) == expected ) {
+			correct++;
+			std::cout << "  correct" << std::endl;
+		} else {
+			std::cout << "  incorrect" << std::endl;
+		}
+	}
+	if (input_data.size() > 0)
+	{
+		std::cout << "Score: " << correct*100/input_data.size() << "%  " << "(" << correct << " of " << input_data.size() << ")" << std::endl;
 	}
 }

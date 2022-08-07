@@ -7,4 +7,4 @@ set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
 project(CapstoneNN)
 
-add_executable(CapstoneNN src/NeuralNetwork.cpp src/main.cpp)
+add_executable(CapstoneNN src/Data.cpp src/NeuralNetwork.cpp src/main.cpp)

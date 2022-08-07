@@ -1,7 +1,12 @@
+#ifndef NEURALNETWORK_H
+#define NEURALNETWORK_H
+
 // NeuralNetwork.hpp  from https://www.geeksforgeeks.org/ml-neural-network-implementation-in-c-from-scratch/
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
 #include <vector>
+
+#include "TrainingData.h"
 
 // use typedefs for future ease for changing data types like : float to double
 typedef float Scalar;
@@ -10,8 +15,9 @@ typedef Eigen::RowVectorXf RowVector;
 typedef Eigen::VectorXf ColVector;
 
 // neural network implementation class!
-// ERRATTA: Needed to add topology member.
-//          train is incorrectly specified
+// ERRATTA: fixed localy by Chris Gorzek to get a working Neural Network
+//          - Needed to add topology member.
+//          - train is incorrectly specified
 class NeuralNetwork {
 public:
 	// constructor
@@ -32,6 +38,8 @@ public:
 	// function to train the neural network give an array of data points
 	void train(std::vector<RowVector*> input_data, std::vector<RowVector*> output_data);
 
+	std::vector<RowVector> work(std::vector<RowVector*> input_data);
+	void verify(std::vector <std::shared_ptr<TrainingData>> vData, std::vector<RowVector*> input_data);
 
 	// storage objects for working of neural network
 	/*
@@ -47,3 +55,5 @@ public:
 	Scalar learningRate;
 	std::vector<uint> topology;
 };
+
+#endif

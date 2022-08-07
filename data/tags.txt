@@ -1,0 +1,12 @@
+ libs_ssa_sigcmax_max_0p72v_m40c
+ libs_ssa_sigcmax_max_0p72v_m40c_scm
+ libs_ssa_sigcmax_max_0p72v_125c
+ libs_ssa_sigcmax_max_0p72v_125c_scm
+ libs_ffa_sigcmin_min_0p88v_m40c
+ libs_ffa_sigcmin_min_0p88v_125c
+ libs_ssa_sigcmax_max_0p63v_m40c
+ libs_ssa_sigcmax_max_0p63v_m40c_scm
+ libs_ssa_sigcmax_max_0p63v_125c
+ libs_ssa_sigcmax_max_0p63v_125c_scm
+ libs_ffa_sigcmin_min_0p77v_m40c
+ libs_ffa_sigcmin_min_0p77v_125c
