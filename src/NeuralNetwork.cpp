@@ -124,8 +124,6 @@ void NeuralNetwork::train(std::vector<RowVector*> input_data, std::vector<RowVec
 	for (uint i = 0; i < input_data.size(); i++) {
 		std::cout << "Input to neural network is : " << *input_data[i] << std::endl;
 		propagateForward(*input_data[i]);
-		std::cout << "Expected output is : " << *output_data[i] << std::endl;
-		std::cout << "Output produced is : " << *neuronLayers.back() << std::endl;
 		auto expected2 = *output_data[i];
 		auto expected = expected2.coeff(1,-1);
 		auto produced2 = *neuronLayers.back();
@@ -167,11 +165,11 @@ void NeuralNetwork::verify(std::vector <std::shared_ptr<TrainingData>> vData, st
 		std::cout << "Input to neural network is : " << *input_data[i] << std::endl;
 		propagateForward(*input_data[i]);
 		int expected = vData[i]->id;
-		auto produced = *neuronLayers.back();
-		auto produced2 = produced.coeff(1,-1);
+		auto produced2 = *neuronLayers.back();
+		auto produced = produced2.coeff(1,-1);
 		std::cout << "Expected output is : " << expected << std::endl;
-		std::cout << "Output produced is : " << produced2 << std::endl;
-		if ( round(produced2) == expected ) {
+		std::cout << "Output produced is : " << produced << std::endl;
+		if ( round(produced) == expected ) {
 			correct++;
 			std::cout << "  correct" << std::endl;
 		} else {

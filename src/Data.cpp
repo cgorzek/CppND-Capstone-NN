@@ -55,7 +55,6 @@ void Data::add(std::string line)
     // _p_v
     for ( std::list<std::string>::const_iterator p = patterns_v.begin() ; p != patterns_v.end() ; p++)
     {
-        std::cout << "line: " << line << std::endl;
         std::regex regexp(*p);
         std::smatch m;
         if (std::regex_search(line, m, regexp)) {
@@ -75,17 +74,11 @@ void Data::add(std::string line)
         if (std::regex_search(line, m, regexp)) {
             if (m[1].str() == "m") {
                 auto d = std::stoi(m[2].str());
-                std::cout << "DEBUG temp  d neg: " << d << std::endl;
                 _p_t = (int) d * -1;
             } else {
                 auto d = std::stoi(m[1].str());            
-                std::cout << "DEBUG temp  d pos: " << d << std::endl;
                 _p_t = (int) d; 
             }
-            for (auto x : m)
-                std::cout << "DEBUG temp m" << x << std::endl;
-            std::cout << "DEBUG temp  _p_t" << _p_t << std::endl;
-            std::cout << "DEBUG temp  line: " << line << std::endl;
             match_flag++;
             break;
         }
@@ -132,11 +125,13 @@ void Data::add(std::string line)
     if ( match_flag < 3 ) {
         std::cout << "WARN: Invalid Line (" << match_flag << "): " << line << std::endl;
     } else {
+        /*
         std::cout << " volt: " << _p_v << std::endl;
         std::cout << " temp: " << _p_t << std::endl;
         std::cout << " extr: " << _p_x << std::endl;
         std::cout << " tt: " << _p_tt << std::endl;
         std::cout << " corner: " << _p_c << std::endl;
+        */
     }
 
 
